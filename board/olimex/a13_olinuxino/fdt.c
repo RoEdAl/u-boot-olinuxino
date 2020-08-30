@@ -43,7 +43,7 @@ static int board_set_compatible(void *fdt)
 	return 0;
 }
 
-static int board_enable_spi_flash(void *fdt)
+static int __maybe_unused board_enable_spi_flash(void *fdt)
 {
 	uint32_t phandle;
 	int offset, ret = 0;
@@ -119,36 +119,32 @@ static int board_enable_spi_flash(void *fdt)
 	return ret;
 }
 
-static int board_disable_gmac(void *fdt)
-{
-
-	return 0;
-}
-
-static int board_enable_emac(void *fdt)
+static int __maybe_unused board_disable_gmac(void *fdt)
 {
 	return 0;
 }
 
-static int board_disable_sdio(void *fdt)
+static int __maybe_unused board_enable_emac(void *fdt)
 {
-
 	return 0;
+}
 
+static int __maybe_unused board_disable_sdio(void *fdt)
+{
+	return 0;
 }
 
 int board_fix_fdt(void *fdt)
 {
- int ret;
+	int ret;
 
-        ret = fdt_increase_size(fdt, 4096);
-        if (ret)
-                return ret;
+	ret = fdt_increase_size(fdt, 4096);
+	if (ret)
+		return ret;
 
-        ret = board_set_compatible(fdt);
-        if (ret)
-                return ret;
-
+	ret = board_set_compatible(fdt);
+	if (ret)
+		return ret;
 
 	return 0;
 }
