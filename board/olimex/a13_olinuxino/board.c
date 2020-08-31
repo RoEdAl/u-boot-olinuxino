@@ -21,34 +21,30 @@
 DECLARE_GLOBAL_DATA_PTR;
 
 #ifdef CONFIG_SPL_BUILD
+static const phys_size_t RAM_512M = 512 * 1024 * 1024;
+
 void spl_board_init(void)
 {
-	int axp_power=0;
-	printf("A13 Board no eeprom found!\n ");
-	phys_size_t l = 512 * 1024 * 1024;	
+	int axp_power = 0;
 	
 	axp_power |= axp_init();
 	if (!axp_power) {
-		printf("PMIC found board is A13-OLinuXino/ A13-OLinuXino WIFI !\n");			
 		eeprom->header = OLINUXINO_EEPROM_MAGIC;
 		eeprom->id = 4432;
 		eeprom->revision.major = 'A';
 		eeprom->revision.minor = 0;
 	} else {
-		if (gd->ram_size == l) {
-			printf("PMIC not found board is A13-SOM-512 \n");
+		if (gd->ram_size == RAM_512M) {
 	        	eeprom->header = OLINUXINO_EEPROM_MAGIC;
 	                eeprom->id = 4788;
                 	eeprom->revision.major = 'A';
                 	eeprom->revision.minor = 0;			
 		} else {
-			printf("PMIC not found board is A13-SOM-256/A13-Micro\n");
 			eeprom->header = OLINUXINO_EEPROM_MAGIC;
                 	eeprom->id = 4787;
                 	eeprom->revision.major = 'A';
                 	eeprom->revision.minor = 0;
 		}
-
 	}
 }
 #endif /* CONFIG_SPL_BUILD */
@@ -66,7 +62,7 @@ int show_board_info(void)
 
 	return 0;
 }
-#endif /* CONFIG_DISPLAY_BOARDINFO  */
+#endif /* CONFIG_DISPLAY_BOARDINFO */
 
 #ifdef CONFIG_BOARD_LATE_INIT
 int board_late_init(void)

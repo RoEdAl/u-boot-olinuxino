@@ -66,7 +66,22 @@ void spl_board_init(void)
 
 	eeprom->id = 8857;
 }
-#endif
+#endif /* CONFIG_SPL_BUILD  */
+
+#ifdef CONFIG_DISPLAY_BOARDINFO
+int show_board_info(void)
+{
+	char  rev[3];
+	const char *name;
+
+	name = olinuxino_get_board_name();
+
+	olinuxino_get_board_revision(rev);
+	printf("%-7s%s Rev.%s\n", "ID:", name, rev);
+
+	return 0;
+}
+#endif /* CONFIG_DISPLAY_BOARDINFO */
 
 #ifdef CONFIG_LAST_STAGE_INIT
 #ifdef CONFIG_VIDEO_LCD_OLINUXINO

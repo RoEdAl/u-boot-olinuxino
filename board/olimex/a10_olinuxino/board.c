@@ -23,13 +23,10 @@ DECLARE_GLOBAL_DATA_PTR;
 #ifdef CONFIG_SPL_BUILD
 void spl_board_init(void)
 {
-	printf("A10-Lime Board no eeprom found!\n ");
-	
 	eeprom->header = OLINUXINO_EEPROM_MAGIC;
 	eeprom->id = 9999;
 	eeprom->revision.major = 'A';
 	eeprom->revision.minor = 0;
-
 }
 #endif /* CONFIG_SPL_BUILD */
 
